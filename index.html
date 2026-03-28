@@ -29,6 +29,11 @@
       box-shadow: 0 0 20px gold;
     }
   </style>
+  img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px gold);
+  transition: 0.3s;
+}
 </head>
 
 <body>
@@ -38,38 +43,20 @@
 <div id="leaderboard"></div>
 <div style="margin: 25px;">
 
-  <!-- 🔥 MAIN PROMO TEXT -->
+  <<!-- 🎰 MAIN RAINBET -->
+<div style="margin-top: 20px;">
   <p style="font-size: 20px; color: #ccc;">
-    Join using our links below to participate in the leaderboard & win rewards 👇
+    Join Rainbet using our code to enter the leaderboard & win rewards 💰
   </p>
 
-  <!-- 🎰 RAINBET -->
-  <div style="margin-top: 20px;">
-    <p style="font-size: 18px;">🎰 Signup on Rainbet</p>
-    <a href="https://rainbet.com/?r=unused" target="_blank">
-      <img src="https://seeklogo.com/images/R/rainbet-logo-4E1EBAEBAE-seeklogo.com.png"
-           style="width: 130px; cursor: pointer;">
-    </a>
-  </div>
-
-  <!-- 💬 DISCORD -->
-  <div style="margin-top: 20px;">
-    <p style="font-size: 18px;">💬 Join our Discord</p>
-    <a href="https://discord.gg/58VpazP2" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-           style="width: 60px; cursor: pointer;">
-    </a>
-  </div>
-
-  <!-- 🎥 KICK -->
-  <div style="margin-top: 20px;">
-    <p style="font-size: 18px;">🎥 Watch us on Kick</p>
-    <a href="https://kick.com/nicknameunused" target="_blank">
-      <img src="https://seeklogo.com/images/K/kick-logo-931C4C4C8E-seeklogo.com.png"
-           style="width: 80px; cursor: pointer;">
-    </a>
-  </div>
-
+  <a href=" https://rainbet.com/?r=unused" target="_blank">
+    <img 
+      src="https://seeklogo.com/images/R/rainbet-logo-4E1EBAEBAE-seeklogo.com.png"
+      style="width: 180px; cursor: pointer; margin-top: 10px;"
+    >
+  </a>
+</div>
+ 
 </div>
 <script>
 async function loadLeaderboard() {
@@ -126,6 +113,28 @@ loadLeaderboard();
 startTimer();
 setInterval(loadLeaderboard, 15000);
 </script>
+<!-- 🔥 FLOATING SOCIALS -->
+<div style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+">
 
+  <!-- DISCORD -->
+  <a href="https://discord.gg/apbny8RZSM" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+         style="width: 50px;">
+  </a>
+
+  <!-- KICK -->
+  <a href="https://kick.com/nicknameunused" target="_blank">
+    <img src="https://seeklogo.com/images/K/kick-logo-931C4C4C8E-seeklogo.com.png"
+         style="width: 50px;">
+  </a>
+
+</div>
 </body>
 </html>
