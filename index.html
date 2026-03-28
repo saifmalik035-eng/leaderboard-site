@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard</title>
+
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      margin: 15px auto;
+      padding: 20px;
+      border-radius: 20px;
+      width: 300px;
+      transition: 0.3s;
+    }
+
+    .rank1 {
+      border: 2px solid gold;
+      box-shadow: 0 0 20px gold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🏆 Leaderboard</h1>
+
+<div id="leaderboard"></div>
+
+<script>
+async function loadLeaderboard() {
+
+  const res = await fetch("https://opensheet.elk.sh/1yQH9Y3qjfnMOok5V676z0xvLQjDmQ0RWwCbjEdAAsfo/Sheet1");
+  const data = await res.json();
+
+  // Sort highest wager first
+  data.sort((a, b) => b.Wagered - a.Wagered);
+
+  const container = document.getElementById("leaderboard");
+  container.innerHTML = "";
+
+  // TOP 8 ONLY
+  data.slice(0, 8).forEach((player, index) => {
+
+    const div = document.createElement("div");
+    div.className = "card " + (index === 0 ? "rank1" : "");
+
+    div.innerHTML = `
+      <h2>#${index + 1} ${player.Username}</h2>
+      <p>Wagered: $${Number(player.Wagered).toLocaleString()}</p>
+      <p>${player.Prize ? "Prize: $" + player.Prize : ""}</p>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+loadLeaderboard();
+setInterval(loadLeaderboard, 15000);
+</script>
+
+</body>
+</html>
