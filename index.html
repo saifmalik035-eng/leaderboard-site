@@ -5,15 +5,35 @@
 
   <style>
     body {
-      background: #0f172a;
-      color: white;
-      font-family: Arial;
-      text-align: center;
-    }
+     .hero {
+ background: url("https://images.unsplash.com/photo-1535223289827-42f1e9919769") center/cover;
+  padding: 60px 20px;
+}
 
+.hero-box {
+  max-width: 700px;
+  margin: auto;
+  background: rgba(30, 41, 59, 0.7);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.note {
+  color: orange;
+  margin-top: 10px;
+  font-size: 14px;
+}
     h1 {
-      margin-top: 20px;
-    }
+      .hero h1 {
+  text-shadow: 0 0 20px gold;
+}
 
     #timer {
       margin-top: 10px;
@@ -45,7 +65,21 @@
 
 <body>
 
-<h1>🏆 Leaderboard</h1>
+<div class="hero">
+
+  <div class="hero-box">
+    <h1>🏆 Leaderboard Race</h1>
+
+    <p class="subtitle">
+      The leaderboard updates every 45 minutes.
+    </p>
+
+    <p class="note">
+      Join using our code to compete & win rewards 💰
+    </p>
+  </div>
+
+</div>
 <div id="timer"></div>
 
 <div style="margin-top: 20px; font-size: 18px; color: #ccc;">
