@@ -4,15 +4,21 @@
   <title>Leaderboard</title>
 
   <style>
-img:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 10px gold);
-  transition: 0.3s;
-}
-</style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
 
     h1 {
       margin-top: 20px;
+    }
+
+    #timer {
+      margin-top: 10px;
+      font-size: 18px;
+      color: gold;
     }
 
     .card {
@@ -28,50 +34,65 @@ img:hover {
       border: 2px solid gold;
       box-shadow: 0 0 20px gold;
     }
+
+    img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px gold);
+      transition: 0.3s;
+    }
   </style>
-  img:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 10px gold);
-  transition: 0.3s;
-}
 </head>
 
 <body>
 
 <h1>🏆 Leaderboard</h1>
-<div id="timer" style="color: gold; margin: 15px; font-size: 18px;"></div>
-<div id="leaderboard"></div>
-<div style="margin: 25px;">
+<div id="timer"></div>
 
- <div style="margin-top: 20px;">
-
+<!-- 🔵 RAINBET TOP -->
+<div style="margin-top: 20px;">
   <a href="https://rainbet.com/?r=unused" target="_blank">
-    <img 
-      src="https://i.imgur.com/7wQ9Q0p.png"
-      style="
-        width: 200px;
-        cursor: pointer;
-        filter: drop-shadow(0 0 15px #00bfff);
-        transition: 0.3s;
-      "
-    >
+    <img src="https://seeklogo.com/images/R/rainbet-logo-4E1EBAEBAE-seeklogo.com.png"
+         style="width: 180px; filter: drop-shadow(0 0 15px #00bfff);">
+  </a>
+</div>
+
+<div id="leaderboard"></div>
+
+<!-- 🔥 FLOATING ICONS -->
+<div style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+">
+
+  <!-- DISCORD -->
+  <a href="https://discord.gg/apbny8RZSM" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+         style="width: 50px;">
+  </a>
+
+  <!-- KICK -->
+  <a href="https://kick.com/Nicknameunused" target="_blank">
+    <img src="https://seeklogo.com/images/K/kick-logo-931C4C4C8E-seeklogo.com.png"
+         style="width: 50px; filter: drop-shadow(0 0 10px #00ff88);">
   </a>
 
 </div>
-async function loadLeaderboard() {
 
+<script>
+async function loadLeaderboard() {
   const res = await fetch("https://opensheet.elk.sh/1yQH9Y3qjfnMOok5V676z0xvLQjDmQ0RWwCbjEdAAsfo/Sheet1");
   const data = await res.json();
 
-  // Sort highest wager first
   data.sort((a, b) => b.Wagered - a.Wagered);
 
   const container = document.getElementById("leaderboard");
   container.innerHTML = "";
 
-  // TOP 8 ONLY
   data.slice(0, 8).forEach((player, index) => {
-
     const div = document.createElement("div");
     div.className = "card " + (index === 0 ? "rank1" : "");
 
@@ -84,6 +105,7 @@ async function loadLeaderboard() {
     container.appendChild(div);
   });
 }
+
 function startTimer() {
   const endDate = new Date("2026-04-30T00:00:00Z");
 
@@ -108,34 +130,11 @@ function startTimer() {
   updateTimer();
   setInterval(updateTimer, 1000);
 }
+
 loadLeaderboard();
 startTimer();
 setInterval(loadLeaderboard, 15000);
 </script>
-<!-- 🔥 FLOATING SOCIALS -->
-<div style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-">
 
-  <!-- DISCORD -->
-  <a href="https://discord.gg/apbny8RZSM" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-         style="width: 50px;">
-  </a>
-
-  <a href="https://kick.com/Nicknameunused" target="_blank">
-  <img src="https://i.imgur.com/l9kZC6C.png"
-       style="
-         width: 50px;
-         filter: drop-shadow(0 0 10px #00ff88);
-       ">
-</a>
-
-</div>
 </body>
 </html>
