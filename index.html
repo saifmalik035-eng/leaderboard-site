@@ -1,53 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaderboard</title>
+  <title>$300 Leaderboard</title>
 
   <style>
     body {
-     body {
-  background: #0f172a;
-  color: white;
-  font-family: Arial;
-  text-align: center;
-  margin: 0;
-}
-}
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      margin: 0;
+      text-align: center;
+    }
 
-.hero-box {
-  max-width: 700px;
-  margin: auto;
-  background: rgba(30, 41, 59, 0.7);
-  padding: 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
-}
+    .main {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
 
-.subtitle {
-  color: #ccc;
-  margin-top: 10px;
-}
+    /* HERO */
+    .hero {
+      padding: 60px 20px;
+    }
 
-.note {
-  color: orange;
-  margin-top: 10px;
-  font-size: 14px;
-}
-    h1 {
-      .hero h1 {
-  text-shadow: 0 0 20px gold;
-}
+    .hero-box {
+      background: #1e293b;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    }
 
-    #timer {
+    .hero h1 {
+      font-size: 34px;
+      text-shadow: 0 0 20px gold;
+    }
+
+    .prize {
+      font-size: 28px;
+      color: gold;
       margin-top: 10px;
+      text-shadow: 0 0 10px gold;
+    }
+
+    .subtitle {
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .note a {
+      color: #00bfff;
+      font-weight: bold;
+      text-decoration: none;
+      text-shadow: 0 0 10px #00bfff;
+    }
+
+    .note a:hover {
+      text-shadow: 0 0 20px #00bfff;
+    }
+
+    /* TIMER */
+    #timer {
+      margin-top: 20px;
       font-size: 18px;
       color: gold;
     }
 
+    /* CARDS */
     .card {
       background: #1e293b;
-      margin: 15px auto;
+      margin: 20px auto;
       padding: 20px;
       border-radius: 20px;
       width: 300px;
@@ -56,68 +82,68 @@
 
     .rank1 {
       border: 2px solid gold;
-      box-shadow: 0 0 20px gold;
+      box-shadow: 0 0 25px gold;
     }
 
-    img:hover {
+    /* FLOATING DISCORD */
+    .floating {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .floating img {
+      width: 50px;
+      cursor: pointer;
+    }
+
+    .floating img:hover {
       transform: scale(1.1);
-      filter: drop-shadow(0 0 10px gold);
       transition: 0.3s;
     }
+
   </style>
 </head>
 
 <body>
 
-<div class="hero">
+<div class="main">
 
-  <div class="hero-box">
-    <h1>🏆 Leaderboard Race</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-box">
+      <h1>🏆 Leaderboard Race</h1>
 
-    <p class="subtitle">
-      The leaderboard updates every 45 minutes.
-    </p>
+      <div class="prize">$300 PRIZE POOL 💰</div>
 
-    <p class="note">
-      Join using our code to compete & win rewards 💰
-    </p>
+      <p class="subtitle">
+        Compete with others and climb the leaderboard.
+      </p>
+
+      <p class="note">
+        Join using our code on 
+        <a href="https://rainbet.com/?r=unused" target="_blank">
+          RAINBET
+        </a>
+        to enter & win rewards 🚀
+      </p>
+    </div>
   </div>
 
-</div>
-<div id="timer"></div>
+  <!-- TIMER -->
+  <div id="timer"></div>
 
-<div style="margin-top: 20px; font-size: 18px; color: #ccc;">
-  Join using our code on 
-  <a href="https://rainbet.com/?r=unused" target="_blank"
-     style="
-       color: #00bfff;
-       font-weight: bold;
-       text-decoration: none;
-       text-shadow: 0 0 10px #00bfff;
-     ">
-     RAINBET
-  </a>
-  to enter the leaderboard & win rewards 💰
+  <!-- LEADERBOARD -->
+  <div id="leaderboard"></div>
+
 </div>
 
-<div id="leaderboard"></div>
-
-<!-- 🔥 FLOATING ICONS -->
-<div style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-">
-
-  <!-- DISCORD -->
+<!-- DISCORD -->
+<div class="floating">
   <a href="https://discord.gg/apbny8RZSM" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-         style="width: 50px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
   </a>
-
+</div>
 
 <script>
 async function loadLeaderboard() {
@@ -143,6 +169,7 @@ async function loadLeaderboard() {
   });
 }
 
+/* TIMER */
 function startTimer() {
   const endDate = new Date("2026-04-30T00:00:00Z");
 
