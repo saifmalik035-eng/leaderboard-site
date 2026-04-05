@@ -7,34 +7,32 @@
 body {
   margin:0;
   font-family:'Poppins',sans-serif;
-  background:#05070d;
+  background: radial-gradient(circle at top,#0a1f44,#020617);
   color:white;
   text-align:center;
-  overflow-x:hidden;
-}
-
-/* PARTICLE BG */
-canvas {
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
 }
 
 /* HEADER */
-.header h1 {
+h1 {
   font-size:42px;
   margin-top:30px;
 }
+
+.subtitle {
+  color:#aaa;
+}
+
 .highlight {
   color:#00bfff;
   text-decoration:none;
+  font-weight:600;
 }
 
 /* TIMER */
 .timer {
   margin:20px;
   color:gold;
+  font-size:18px;
 }
 
 /* TOP 3 */
@@ -54,7 +52,7 @@ canvas {
 }
 
 .card:hover {
-  transform:scale(1.07);
+  transform:scale(1.05);
 }
 
 .rank1 {
@@ -62,18 +60,12 @@ canvas {
   box-shadow:0 0 25px gold;
 }
 
-.avatar {
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  margin-bottom:10px;
-  border:2px solid #00bfff;
-}
-
 /* LIST */
 .list {
   max-width:600px;
   margin:30px auto;
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
 }
 
 .row {
@@ -93,6 +85,7 @@ canvas {
   text-decoration:none;
   display:inline-block;
 }
+
 .btn:hover {
   box-shadow:0 0 15px #00bfff;
 }
@@ -102,115 +95,77 @@ canvas {
   margin-top:40px;
   color:#aaa;
 }
+
 .fire {
   color:orange;
-  cursor:pointer;
+  font-weight:bold;
 }
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>$300 LEADERBOARD 💰</h1>
-  <p>Compete & climb the leaderboard</p>
-  <p>
-    Join on 
-    <a class="highlight" href="https://rainbet.com/?r=unused" target="_blank">RAINBET</a>
-  </p>
-</div>
+<h1>$300 LEADERBOARD 💰</h1>
+<p class="subtitle">Compete & climb the leaderboard</p>
+<p>
+Join on 
+<a class="highlight" href="https://rainbet.com/?r=unused" target="_blank">RAINBET</a>
+</p>
 <div class="timer" id="timer"></div>
 <div class="top3" id="top3"></div>
 <div class="list" id="list"></div>
+<!-- BUTTONS -->
 <div>
   <a class="btn" href="https://rainbet.com/?r=unused" target="_blank">Sign Up</a>
   <a class="btn" href="https://discord.gg/92FJYmq33" target="_blank">My Discord</a>
   <a class="btn" href="https://discord.gg/Nzq7mzGtc" target="_blank">Owner Discord</a>
 </div>
+<!-- FOOTER -->
 <div class="footer">
-  🔥 Made by 
-  <a class="fire" href="https://discord.gg/92FJYmq33" target="_blank">SAIF</a>
-  <p>Please gamble responsibly. Gambling can be addictive.</p>
+  <p>🔥 Made by <a class="fire" href="https://discord.gg/92FJYmq33" target="_blank">SAIF</a></p>
+  <p>
+    Please gamble responsibly. Gambling can be addictive and may result in difficulties.<br>
+    Visit BeGambleAware.org for support.
+  </p>
+  <p>© 2026 All Rights Reserved</p>
 </div>
 <script>
 
-/* PARTICLES */
-const canvas=document.getElementById("bg");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-for(let i=0;i<60;i++){
-  particles.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    r:Math.random()*2,
-    dx:(Math.random()-0.5)*0.5,
-    dy:(Math.random()-0.5)*0.5
-  });
-}
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle="#00bfff";
-    ctx.fill();
-    p.x+=p.dx;
-    p.y+=p.dy;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-/* COUNT ANIMATION */
-function animateValue(el, start, end, duration){
-  let startTime=null;
-  function step(t){
-    if(!startTime) startTime=t;
-    const progress=Math.min((t-startTime)/duration,1);
-    el.innerHTML="$"+Math.floor(progress*(end-start)+start).toLocaleString();
-    if(progress<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
 /* LOAD DATA */
-async function loadLeaderboard(){
-  const res=await fetch("https://opensheet.elk.sh/1yQH9Y3qjfnMOok5V676z0xvLQjDmQ0RWwCbjEdAAsfo/Sheet1");
-  const data=await res.json();
+async function loadLeaderboard() {
+  const res = await fetch("https://opensheet.elk.sh/1yQH9Y3qjfnMOok5V676z0xvLQjDmQ0RWwCbjEdAAsfo/Sheet1");
+  const data = await res.json();
 
-  data.sort((a,b)=>Number(b.Wagered)-Number(a.Wagered));
+  // SAFE SORT (fix NaN issues)
+  data.sort((a,b)=>
+    Number(String(b.Wagered||0).replace(/,/g,"")) -
+    Number(String(a.Wagered||0).replace(/,/g,""))
+  );
 
-  const top3=document.getElementById("top3");
-  const list=document.getElementById("list");
+  const top3 = document.getElementById("top3");
+  const list = document.getElementById("list");
 
   top3.innerHTML="";
   list.innerHTML="";
 
+  // TOP 3
   data.slice(0,3).forEach((p,i)=>{
-    const wager=Number(String(p.Wagered).replace(/,/g,""))||0;
+    const wager = Number(String(p.Wagered||0).replace(/,/g,"")) || 0;
 
-    const div=document.createElement("div");
-    div.className="card "+(i==0?"rank1":"");
-
-    div.innerHTML=`
-      <img class="avatar" src="https://i.pravatar.cc/150?u=${p.Username}">
-      <h3>#${i+1} ${p.Username}</h3>
-      <div class="amount">0</div>
-      <p>Prize: $${p.Prize||0}</p>
+    top3.innerHTML += `
+      <div class="card ${i==0?'rank1':''}">
+        <h3>#${i+1} ${p.Username || "Unknown"}</h3>
+        <p>$${wager.toLocaleString()}</p>
+        <p>Prize: $${p.Prize || 0}</p>
+      </div>
     `;
-
-    top3.appendChild(div);
-    animateValue(div.querySelector(".amount"),0,wager,800);
   });
 
+  // REST
   data.slice(3).forEach((p,i)=>{
-    const wager=Number(String(p.Wagered).replace(/,/g,""))||0;
+    const wager = Number(String(p.Wagered||0).replace(/,/g,"")) || 0;
 
-    list.innerHTML+=`
+    list.innerHTML += `
       <div class="row">
-        <span>#${i+4} ${p.Username}</span>
+        <span>#${i+4} ${p.Username || "Unknown"}</span>
         <span>$${wager.toLocaleString()}</span>
       </div>
     `;
@@ -219,21 +174,26 @@ async function loadLeaderboard(){
 
 /* TIMER */
 function startTimer(){
-  const end=new Date("2026-04-30T00:00:00Z");
-  function update(){
-    const now=new Date();
-    const d=Math.floor((end-now)/1000/60/60/24);
-    const h=Math.floor((end-now)/1000/60/60%24);
-    const m=Math.floor((end-now)/1000/60%60);
-    const s=Math.floor((end-now)/1000%60);
+  const end = new Date("2026-04-30T00:00:00Z");
 
-    document.getElementById("timer").innerHTML=
-      `⏳ ${d}d ${h}h ${m}m ${s}s`;
+  function update(){
+    const now = new Date();
+    const diff = end - now;
+
+    const d = Math.floor(diff/1000/60/60/24);
+    const h = Math.floor(diff/1000/60/60%24);
+    const m = Math.floor(diff/1000/60%60);
+    const s = Math.floor(diff/1000%60);
+
+    document.getElementById("timer").innerHTML =
+      `⏳ Ends in: ${d}d ${h}h ${m}m ${s}s`;
   }
+
   update();
   setInterval(update,1000);
 }
 
+/* RUN */
 loadLeaderboard();
 startTimer();
 setInterval(loadLeaderboard,15000);
